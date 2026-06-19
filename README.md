@@ -659,3 +659,221 @@ new Chart(ctx, {
         garantir qualidade de vida para as gerações atuais e futuras.
     </p>
 </div>
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== FUNDO GERAL ===== */
+body {
+    background: #f1f8e9;
+    color: #1b1b1b;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* ===== CARD ===== */
+.card {
+    background: #ffffff;
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* ===== TÍTULOS ===== */
+h2 {
+    color: #2e7d32;
+    margin-bottom: 15px;
+}
+
+h3 {
+    color: #388e3c;
+    margin-top: 15px;
+}
+
+/* ===== TEXTOS ===== */
+p {
+    margin-bottom: 12px;
+    text-align: justify;
+}
+
+/* ===== GALERIA ===== */
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+figure {
+    background: #fafafa;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+figure:hover {
+    transform: scale(1.03);
+}
+
+figure img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+figcaption {
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* ===== QUIZ ===== */
+.question {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-left: 5px solid #2e7d32;
+    background: #f9fff9;
+    border-radius: 8px;
+}
+
+label {
+    display: block;
+    margin: 6px 0;
+    cursor: pointer;
+}
+
+/* ===== BOTÃO ===== */
+button {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #1b5e20;
+}
+
+/* ===== RESULTADO ===== */
+#resultado {
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* ===== LISTAS ===== */
+ul {
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+    .card {
+        padding: 15px;
+    }
+
+    figure img {
+        height: 150px;
+    }
+}
+// ===== QUIZ =====
+function corrigirQuiz() {
+    let pontos = 0;
+
+    const respostas = document.querySelectorAll('input[type="radio"]:checked');
+
+    respostas.forEach(resposta => {
+        if (resposta.value === "c") {
+            pontos++;
+        }
+    });
+
+    let mensagem = "";
+
+    switch (true) {
+        case (pontos === 10):
+            mensagem = "🏆 Excelente! Você acertou 10/10!";
+            break;
+
+        case (pontos >= 8):
+            mensagem = `🌎 Muito bem! Você fez ${pontos}/10 pontos.`;
+            break;
+
+        case (pontos >= 5):
+            mensagem = `🌱 Bom resultado! Você fez ${pontos}/10 pontos.`;
+            break;
+
+        default:
+            mensagem = `📚 Você fez ${pontos}/10 pontos. Continue estudando!`;
+    }
+
+    document.getElementById("resultado").innerHTML = mensagem;
+}
+
+
+// ===== GRÁFICO (Chart.js seguro) =====
+document.addEventListener("DOMContentLoaded", () => {
+    const canvas = document.getElementById("graficoDesmatamento");
+
+    if (canvas) {
+        new Chart(canvas, {
+            type: "bar",
+            data: {
+                labels: [
+                    "Perda da Biodiversidade",
+                    "Aquecimento Global",
+                    "Erosão do Solo",
+                    "Perda de Habitats",
+                    "Redução das Chuvas",
+                    "Poluição dos Rios"
+                ],
+                datasets: [{
+                    label: "Impacto (%)",
+                    data: [95, 90, 80, 88, 75, 65],
+                    backgroundColor: [
+                        "#2e7d32",
+                        "#c62828",
+                        "#ef6c00",
+                        "#1565c0",
+                        "#6a1b9a",
+                        "#00838f"
+                    ],
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    title: {
+                        display: true,
+                        text: "Principais Consequências do Desmatamento"
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    }
+});
+
